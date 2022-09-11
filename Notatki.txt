@@ -50,3 +50,6 @@ Uproszczony widok statusu jest dostępny pod komendą "#git status -s".
 
 CTRL + L czyści konsolę git basha.
 
+By dokonać commita, należy użyc komendy '#git commit -m "wiadomość"'
+Można użyć commit i add naraz ale tylko, jeśli plik został już wcześniej dodany
+    #git commit -a -m "wiadomość"
