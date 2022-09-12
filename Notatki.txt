@@ -1,0 +1,114 @@
+Są trzy poziomy konfiguracji gita:
+1. System - ustala zasady (wprowadza ustawienia) dla wszystkich użytkowników 
+            urządzenia/systemu i wszystkich repozytoriów im podlegających
+2. Global - ustala zasady (wprowadza ustawienia) dla wszystkich repozytoriów 
+            konkretnego użytkownika na bieżącym urządzeniu
+3. Local -  ustala zasady (wprowadza ustawienia) dla konkretnego repozytorium
+
+    KOLEJNY POZIOM KONFIGURACJI NADPISUJE USTAWIENIA WYŻSZEGO POZIOMU - 
+    (poziom globalny nadpiuje ustawienia systemowe, ta sama zależność działa 
+    między globalnym i lokalnym. Oznacza to tyle, że ustawienia systemowe nadal
+    działają dla wszystkich użytkowników, wyłączając z tego grona użytkownika z 
+    ustawieniami globalnymi, o ile zostały one ustalone)
+
+Repozytorium - katalog o nazwie ".git" wewnątrz projektu, zawierający pliki 
+               konfiguracyjne oraz bieżącą historię projektu by móc śledzić wszelkie
+               zmiany zachodzące w plikach projektu.
+
+Konfiguracja gita:
+1. #git config --global user.name "nazwa użytkownika"
+2. #git config --global user.email "email.użytkownika@example.com"
+
+    Użycie komendy "--global" wprowadza ustawienia globalnie
+
+    By sprawdzić nazwę użytkownika użyj komendy "#git config user.name"
+    By sprawdzić wszystkie właściwości użyj komendy "#git config --list"
+
+By zmienić domyślny edytor tekstu użyj komendy
+    #git config --global core.editor "ścieżka do pliku"
+
+Inicjalizacja repozytorium:
+    Komenda "#git init" inicjalizuje puste repozytorium zakładając branch "(master)"
+    Branch "(master)" jest głównym branchem.
+    Branch to jakby raport procesu codziennych zmian od strony developera.
+    Każdy branch zawiera historię snapshotów, czyli (technicznie rzecz ujmując) 
+    commitów. Używa się ich do próbnych zmian developerskich.
+
+Pliki mogą istnieć w dwóch stanach - tracked i untracked. Pliki tracked to te, które
+nie zostały zmienione od poprzedniego commita - git zdaje sobie sprawę z ich 
+istnienia w niezmienionej formie. Pliki untracked to te, które znajdują się w 
+katalogu projektu, lecz w których zostały dokonane zmiany od poprzedniego commita, 
+czyli git nie ma ich obrazu w commicie. 
+
+By dodać plik do obszaru roboczego należy użyć komendy "#git add nazwaPliku.rozszerzenie".
+Kolejne pliki, które chcemy dodać można dopisać dalej do komendy. By sprawdzić stan 
+plików w gicie należy użyć komendy "#git status". By dodać wszystkie pliki z 
+rozszerzeniem java, należy użyć komendy "#git add *.java". By dodać wszystkie pliki z 
+obszaru roboczego - "#git add ."
+
+Uproszczony widok statusu jest dostępny pod komendą "#git status -s".
+
+CTRL + L czyści konsolę git basha.
+
+By dokonać commita, należy użyc komendy '#git commit -m "wiadomość"'
+Można użyć commit i add naraz ale tylko, jeśli plik został już wcześniej dodany
+    #git commit -a -m "wiadomość"
+
+By uzyskać pomoc dotyczącą komendy wpisujesz "#git <koemnda> --help"
+
+By usunąć plik z historii gita używasz komendy "#git rm --cached nazwaPliku.rozszerzenie"
+--cached określa usunięcie pliku z historii gita ale nie z katalogu plików. Bez tej
+flagi plik zostałby usunięty całkowicie. By usunąć wszystkie dodane pliki z historii 
+gita należy użyć komendy "#git rm -r --cached nazwaKatalogu/"
+
+By stworzyć pliki z poziomu git basha użyj komendy "#touch", tworzenie .gitignore - 
+"#touch .gitignore"
+
+By zrobić poprawkę w commicie (np. zapomniałeś dodać pliku do staging area przed 
+commitem) używasz komendy "#git commit --amend", która używa ostatniego commita jako 
+wyjściowego i dokonuje w nim poprawkę. Gdy użyjesz tej komendy otworzy się edytor 
+tekstu, w którym możesz dokonać zmian wiadomości. By zmienić commita bez zmiany wiadomości 
+dodaj "--no-edit" do poprzedniej komendy.
+
+Gdy dodasz do staging area plik, którego nie chciałeś dodawać albo coś, użyj komendy 
+"#git restore --staged <plik>". By przywrócić plik do stanu z poprzedniego commita 
+(usunąć zmiany), użyj komendy "#git restore <plik>".
+
+Zewnętrzne repozytorium jest ułatwieniem gdy jesteś częścią zespołu, by mieć projekt 
+w jednym miejscu i by każdy miał do niego dostęp, jest hostowane w sieci i dostępne 
+24/7. 
+
+Dodanie repozytorium na githuba:
+1. Stwórz repozytorium na githubie
+2. Sprawdź, czy repo na dysku jest połączone z jakims repo w sieci komendą 
+   "#git remote -v". Jeśli nic się nie pojawi to znaczy, że nie jest połączone
+3. Skopiuj adres url z githuba do repo z któym chcesz się połączyć, następnie użyj
+   komendy "#git remote add origin <link z githuba>"
+4. By połączyć branch master z dysku z branchem z githuba użyj komendy 
+   "#git push origin -u master". flaga "-u" oznacza upstream i jest po to by system
+   łączył się bezpośrednio z konkretnym repo na githubie gdy będziesz synchronizował
+   branche. Jeśli nie podałeś swoich danych logowania wcześniej, bash poprosi Cię o 
+   podanie ich teraz. 
+
+Klonowanie repozytorium z githuba: 
+1. Gdy już masz adres url z githuba, użyj komendy "#git clone <link>" w folderze, 
+   w którym chcesz mieć repo. 
+
+Protokół ssh (secure socket shell) pozwala połączyć lokalne repo ze zdalnym repo 
+zewsząd, bezpiecznie i zrobić z tym połączeniem co chcesz. By połączyć się za pomocą 
+SSH musisz posiadać parę kluczy - prywatny i publiczny. Prywatny posiadasz ty na 
+swojej maszynie, publiczny możesz przechowywać gdzie chcesz (zazwyczaj na githubie). 
+
+Uzyskiwanie klucza:
+1. Otwórz git GUI w lokalnym repo, kliknij "help" i "show SSH key"
+2. W okienku, które wyskoczy kliknij "Generate Key", wyświetli się "enter passphrase"
+   Passphrase służy do zakodowania prywatnego klucza. Jeśli ktoś ukradnie twój prywatny 
+   klucz, będzie on bezużyteczny bez passphrase. 
+3. Przeklikaj ok aż wrócisz do poprzedniego okna gdzie wyświetli się twój public key.
+   Skopiuj ten klucz i wejdz na swoje konto na githubie. Przejdz do ustawień, i 
+   "ssh and gpg keys", następnie "add new key". W tytuł wpisz co chcesz, wklej klucz 
+   poniżej i potwierdź operacje hasłem. 
+
+Sprawdź połączenie repo (#git remote -v). Jeśli używasz połączenia protokołem https 
+musisz zmienić na ssh. Wróć do githuba, kliknij "code" i skopiuj adres ssh. Wróć do 
+basha i użyj komendy "#git remote set-url origin <link>". Sprawdź połączenie ponownie.
