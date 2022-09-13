@@ -112,3 +112,7 @@ Uzyskiwanie klucza:
 Sprawdź połączenie repo (#git remote -v). Jeśli używasz połączenia protokołem https 
 musisz zmienić na ssh. Wróć do githuba, kliknij "code" i skopiuj adres ssh. Wróć do 
 basha i użyj komendy "#git remote set-url origin <link>". Sprawdź połączenie ponownie.
+
+By przejść do konkretnego commita użyj komendy "#got checkout <pięćPierwszychZnakówCommita>" 
+Lepiej nie tworzyć żadnych commitów gdy skorzystasz z tej funkcji - używaj jej głównie 
+do sprawdzania konkretnych informacji czy opcji użytych wcześniej. 
