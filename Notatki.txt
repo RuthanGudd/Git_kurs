@@ -113,6 +113,23 @@ Sprawdź połączenie repo (#git remote -v). Jeśli używasz połączenia protok
 musisz zmienić na ssh. Wróć do githuba, kliknij "code" i skopiuj adres ssh. Wróć do 
 basha i użyj komendy "#git remote set-url origin <link>". Sprawdź połączenie ponownie.
 
+<<<<<<< HEAD
 By przejść do konkretnego commita użyj komendy "#got checkout <pięćPierwszychZnakówCommita>" 
 Lepiej nie tworzyć żadnych commitów gdy skorzystasz z tej funkcji - używaj jej głównie 
 do sprawdzania konkretnych informacji czy opcji użytych wcześniej. 
+=======
+By pushnąć kolejnyt raz wystarczy użyć komendy "#git push", gdyż git wie, że jesteś 
+połączony ze zdalnym repo.
+
+Branche są po to by móc odłączyć się od głównej "ścieżki" developmentu, by móc dalej
+rozwijać projekt bez psucia głównego brancha. Wskaźnik "HEAD" służy do określania na 
+jakim branchu działamy. 
+
+By utworzyć nowy branch uzyj komendy "#git branch <nazwaBrancha>". By sprawdzic jakie 
+branche są na lokalnym repo użyj komendy "#git branch". By sprawdzić jakie branche są 
+dostępne na zdalnym repo użyj komendy "#git branch -r". By sprawdzić lokalne i zdalne 
+branche użyj komendy "#git branch -a". By stworzyc nowy branch i do niego przeskoczyć 
+użyj komendy "#git checkout -b <nazwaBrancha>" gdzie flaga "-b" określa, że chcesz stworzyć nowy 
+branch. Komenda "#git checkout" służy do przeskakiwania między branchami. 
+                          
+>>>>>>> refs/remotes/origin/master
