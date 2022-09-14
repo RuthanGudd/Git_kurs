@@ -126,3 +126,4 @@ dostępne na zdalnym repo użyj komendy "#git branch -r". By sprawdzić lokalne 
 branche użyj komendy "#git branch -a". By stworzyc nowy branch i do niego przeskoczyć 
 użyj komendy "#git checkout -b <nazwaBrancha>" gdzie flaga "-b" określa, że chcesz stworzyć nowy 
 branch. Komenda "#git checkout" służy do przeskakiwania między branchami. 
+                          
