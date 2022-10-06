@@ -1,0 +1,136 @@
+Są trzy poziomy konfiguracji gita:
+1. System - ustala zasady (wprowadza ustawienia) dla wszystkich użytkowników urządzenia/systemu i wszystkich repozytoriów im podlegających
+2. Global - ustala zasady (wprowadza ustawienia) dla wszystkich repozytoriów konkretnego użytkownika na bieżącym urządzeniu
+3. Local -  ustala zasady (wprowadza ustawienia) dla konkretnego repozytorium
+
+   KOLEJNY POZIOM KONFIGURACJI NADPISUJE USTAWIENIA WYŻSZEGO POZIOMU - (poziom globalny nadpiuje ustawienia systemowe, ta sama zależność działa między globalnym i lokalnym. Oznacza to tyle, że ustawienia systemowe nadal działają dla wszystkich użytkowników, wyłączając z tego grona użytkownika z ustawieniami globalnymi, o ile zostały one ustalone)
+
+Repozytorium - katalog o nazwie ".git" wewnątrz projektu, zawierający pliki konfiguracyjne oraz bieżącą historię projektu by móc śledzić wszelkie zmiany zachodzące w plikach projektu.
+
+Konfiguracja gita:
+1. #git config --global user.name "nazwa użytkownika"
+2. #git config --global user.email "email.użytkownika@example.com"
+
+    Użycie komendy "--global" wprowadza ustawienia globalnie
+
+By sprawdzić nazwę użytkownika użyj komendy "#git config user.name"
+By sprawdzić wszystkie właściwości użyj komendy "#git config --list"
+
+By zmienić domyślny edytor tekstu użyj komendy #git config --global core.editor "ścieżka do pliku"
+
+Inicjalizacja repozytorium:
+    Komenda "#git init" inicjalizuje puste repozytorium zakładając branch "(master)" Branch "(master)" jest głównym branchem. Branch to jakby raport procesu codziennych zmian od strony developera. Każdy branch zawiera historię snapshotów, czyli (technicznie rzecz ujmując) commitów. Używa się ich do próbnych zmian developerskich.
+
+Pliki mogą istnieć w dwóch stanach - tracked i untracked. Pliki tracked to te, które nie zostały zmienione od poprzedniego commita - git zdaje sobie sprawę z ich istnienia w niezmienionej formie. Pliki untracked to te, które znajdują się w katalogu projektu, lecz w których zostały dokonane zmiany od poprzedniego commita, czyli git nie ma ich obrazu w commicie. 
+
+By dodać plik do obszaru roboczego należy użyć komendy "#git add nazwaPliku.rozszerzenie". Kolejne pliki, które chcemy dodać można dopisać dalej do komendy. By sprawdzić stan plików w gicie należy użyć komendy "#git status". By dodać wszystkie pliki z rozszerzeniem java, należy użyć komendy "#git add *.java". By dodać wszystkie pliki z obszaru roboczego - "#git add ."
+
+Uproszczony widok statusu jest dostępny pod komendą "#git status -s".
+
+CTRL + L czyści konsolę git basha.
+
+By dokonać commita, należy użyc komendy '#git commit -m "wiadomość"'. 
+Można użyć commit i add naraz ale tylko, jeśli plik został już wcześniej dodany - #git commit -a -m "wiadomość"
+
+By uzyskać pomoc dotyczącą komendy wpisujesz "#git <koemnda> --help".
+
+By usunąć plik z historii gita używasz komendy "#git rm --cached nazwaPliku.rozszerzenie" --cached określa usunięcie pliku z historii gita ale nie z katalogu plików. Bez tej flagi plik zostałby usunięty całkowicie. By usunąć wszystkie dodane pliki z historii gita należy użyć komendy "#git rm -r --cached nazwaKataloggitu/".
+
+By stworzyć pliki z poziomu git basha użyj komendy "#touch", tworzenie .gitignore - "#touch .gitignore"
+
+By zrobić poprawkę w commicie (np. zapomniałeś dodać pliku do staging area przed commitem) używasz komendy "#git commit --amend", która używa ostatniego commita jako wyjściowego i dokonuje w nim poprawkę. UŻYWASZ TEJ KOMENDY PO DOKONANIU POPRAWKI(np. dodanie pliku do staging area). Gdy użyjesz tej komendy otworzy się edytor tekstu, w którym możesz dokonać zmian wiadomości. By zmienić commita bez zmiany wiadomości dodaj "--no-edit" do poprzedniej komendy.
+
+Gdy dodasz do staging area plik, którego nie chciałeś dodawać albo coś, użyj komendy "#git restore --staged <plik>". By przywrócić plik do stanu z poprzedniego commita (usunąć zmiany), użyj komendy "#git restore <plik>".
+
+Zewnętrzne repozytorium jest ułatwieniem gdy jesteś częścią zespołu, by mieć projekt w jednym miejscu i by każdy miał do niego dostęp, jest hostowane w sieci i dostępne 24/7. 
+
+Dodanie repozytorium na githuba:
+1. Stwórz repozytorium na githubie
+2. Sprawdź, czy repo na dysku jest połączone z jakims repo w sieci komendą "#git remote -v". Jeśli nic się nie pojawi to znaczy, że nie jest połączone.
+3. Skopiuj adres url z githuba do repo z któym chcesz się połączyć, następnie użyj komendy "#git remote add origin <link z githuba>".
+4. By połączyć branch master z dysku z branchem z githuba użyj komendy "#git push origin -u master". flaga "-u" oznacza upstream i jest po to by system łączył się bezpośrednio z konkretnym repo na githubie gdy będziesz synchronizował branche. Jeśli nie podałeś swoich danych logowania wcześniej, bash poprosi Cię o podanie ich teraz. 
+
+Klonowanie repozytorium z githuba - gdy już masz adres url z githuba, użyj komendy "#git clone <link>" w folderze, w którym chcesz mieć repo. 
+
+Protokół ssh (secure socket shell) pozwala połączyć lokalne repo ze zdalnym repo zewsząd, bezpiecznie i zrobić z tym połączeniem co chcesz. By połączyć się za pomocą SSH musisz posiadać parę kluczy - prywatny i publiczny. Prywatny posiadasz ty na swojej maszynie, publiczny możesz przechowywać gdzie chcesz (zazwyczaj na githubie). 
+
+Uzyskiwanie klucza:
+1. Otwórz git GUI w lokalnym repo, kliknij "help" i "show SSH key".
+2. W okienku, które wyskoczy kliknij "Generate Key", wyświetli się "enter passphrase". Passphrase służy do zakodowania prywatnego klucza. Jeśli ktoś ukradnie twój prywatny klucz, będzie on bezużyteczny bez passphrase. 
+3. Przeklikaj ok aż wrócisz do poprzedniego okna gdzie wyświetli się twój public key. Skopiuj ten klucz i wejdz na swoje konto na githubie. Przejdz do ustawień, i "ssh and gpg keys", następnie "add new key". W tytuł wpisz co chcesz, wklej klucz poniżej i potwierdź operacje hasłem. 
+
+Sprawdź połączenie repo (#git remote -v). Jeśli używasz połączenia protokołem https musisz zmienić na ssh. Wróć do githuba, kliknij "code" i skopiuj adres ssh. Wróć do basha i użyj komendy "#git remote set-url origin <link>". Sprawdź połączenie ponownie.
+
+By pushnąć kolejnyt raz wystarczy użyć komendy "#git push", gdyż git wie, że jesteś połączony ze zdalnym repo.
+
+Branche są po to by móc odłączyć się od głównej "ścieżki" developmentu, by móc dalej rozwijać projekt bez psucia głównego brancha. Wskaźnik "HEAD" służy do określania na jakim branchu działamy. 
+
+By utworzyć nowy branch uzyj komendy "#git branch <nazwaBrancha>". By sprawdzic jakie branche są na lokalnym repo użyj komendy "#git branch". By sprawdzić jakie branche są dostępne na zdalnym repo użyj komendy "#git branch -r". By sprawdzić lokalne i zdalne branche użyj komendy "#git branch -a". By stworzyc nowy branch i do niego przeskoczyć użyj komendy "#git checkout -b <nazwaBrancha>" gdzie flaga "-b" określa, że chcesz stworzyć nowy branch. Komenda "#git checkout" służy do przeskakiwania między branchami. 
+
+By pushnąć nowy branch na zdalne repo użyj komendy #git push origin -u <nazwaBrancha>
+
+By przejść do konkretnego commita użyj komendy "#git checkout <pięćPierwszychZnakówCommita>". Lepiej nie tworzyć żadnych commitów gdy skorzystasz z tej funkcji - używaj jej głównie do sprawdzania konkretnych informacji czy opcji użytych wcześniej. 
+
+By usunąć konkretny branch z loklalnego repo użyj komendy "#git branch -d <nazwaBrancha>". 
+
+By usunąć konkretny branch ze zdalnego repo użyj komendy "#git push origin --delete <nazwaBrancha>".
+
+By zmienić branch można użyć komendy "#git switch <nazwaBrancha>". By stworzyc nowy branch można użyć komendy "#git switch -c <nazwaBrancha>", gdzie flaga "-c" oznacza create. By wrócić do poprzedniego brancha użyj komendy "#git switch -".
+
+Pull request to proces zatwierdzania zmian w projekcie z głównym repo (?). Pull request jest głównie przydatny do łączenia zmian między branchami - submitując prosisz innych użytkowników by zrobili to samo. Merge reqeust to prośba by ktoś połączył zmiany z innymi branchami(?).
+
+#git fetch - sprowadza wszelkie zmiany ze zdalnego repo na lokalne repo. Nie łączy zmian z lokalnymi branchami, jeśli są commity w zdalnym a nie ma w lokalnym to fetch zachowa info o zmianach. 
+
+fast-forward merge - merguje branch master do stanu innych branchy
+
+#git pull - połączenie fetch i merge.
+
+Merge conflicts pojawiają się gdy dwóch różnych developerów dokonywało zmian w tym samym pliku i chce zmergować do master brancha. 
+
+Rozwiązywanie konfliktów na lokalnym repo:
+1. Upewnij sie, że jesteś na branchu, który wywołał konflikt - będziesz chciał zmergować do niego branch master ze zdalnego repo. By to zrobić użyj komendy #git pull origin master. Wyświetli się komunikat, że jest konflikt.
+2. Wejdź do pliku, w którym jest konflikt i rozwiąż go, po czym zapisz. 
+3. Wejdź do git basha i stwórz commita. Nie musisz dodawać wiadomości bo już jakaś jest. Pushnij zmiany do zdalnego repo. 
+
+Rebasing oznacza ustanowienie zmian z jednego brancha na innym branchu. Rebasing to narzędzie do rozwiązywania konfliktów. #git rebase rebasuje brancha którego chcemy, #git pull --rebase to coś w stylu fetch + rebase. Ta druga komenda umożliwia fetchowanie ze zdalnego repo przed rebasingiem. 
+
+#git pull --rebase origin master ściąga merge conflict ze zdalnego repo i umożliwia rozwiązanie go w taki sposób by utrzymać porządek w historii gita. 
+
+Etapy:
+1. Używasz funkcji #git reset (więcej o niej dopiero będzie) po czym komendy #git pull --rebase origin master. 
+2. Rozwiązujesz konflikty
+3. Używasz komendy #git rebase --continue
+
+Po tym nie możesz normalnie zpushować zmian, bo historia commitów na zdalnym i lokalnym repo jest inna. Jako że zrobiłeś merge z rebase na innym branchu niż master, musisz mastera uaktualnić o historię z tego brancha, nadpisać tak jakby. By to zrobić użyj komendy #git push --force-with-lease, która zapewni nadpisanie konkretnego commita nad którym pracowaliśmy ale żadnych kolejnych, które mogły zostać stworzone przez innych developerów.
+
+4 WAŻNE ZASADY OD ANDREI PIATAKHA (prowadzący kurs):
+1. Always create branches from master
+2. Force update and change commit history only on your branches.
+3. Use --force-with-lease instead of -f
+4. Always rebase on the origin master branch before creating a pull request
+
+Interactive rebase - funkcja, która pomaga zrobić porządek w commitach zanim przejdziesz lub rebasujesz do kolejnego brancha. Odpowiednia komenda = #git rebase -i 
+
+Squashing commits - łączenie commitów w jeden ale bez ingerencji w zmiany jakie zaszły. Trzymanie porządku w historii gita. Komenda #git rebase -i HEAD~<liczba>, gdzie liczba to ilość commitów nad jakimi chcesz popracować. Na koniec użyj pusha z --force-with-lease
+
+Komendy #git reset używasz gdy chcesz odwrócić zmiany jakich ostatnio dokonałeś, zmienić historię commitów, przywrócić stan zdalnego brancha, przywrócić stan brancha po niepomyślnym rebasie. Różnica między git checkout i git reset jest taka, że przy checkout zmieniamy pozycje wskaźnika "HEAD", ale nie "Master", przy reset zmieniamy jednocześnie pozycje obu wskaźników.
+
+#git reset:
+--soft - nie ingeruje w pliki czy status gita, przechowuje wszsytkie poprzednie zmiany w staging area, wystarczy użyć commit by zatwierdzić zmiany
+--mixed - nie ingeruje w pliki, lecz usuwa zmiany dokonane w staging area, trzeba użyć komendy add przed commitem, jest domyślną opcją
+--hard - ingeruje w pliki i w status gita, cofa wszelkie zmiany dokonane po konkretnym stage'u do którego chcesz wrócić
+
+#git fetch --all - komenda do zrównainia stanu lokalnego repo z remote
+
+#git stash - komenda robiąca zapis stanu working directory gdy nie możesz commitować zmian w danym momencie a musisz tymczasowo porzucić projekt. Możesz użyć stasha aby później dodać zmiany do innego brancha.
+
+#git stash apply - dodaje zmiany ze stasha do obecnego brancha
+
+Stash używa stacka z LIFO principle (last in first out), która działą tak, że to co ostatnie dodałeś do stacka, zostanie jako pierwsze wyjęte. By sprawdzić stack użyj komendy #git stash list. By zaaplikować konkretny stage ze stasha użyj komendy #git stash apply stash@{numer}. By dodać wiadomość do stacka stasha użyj komendy #git stash save "wiadomość". By usunąć stack ze stasha użyj komendy #git stash pop. By dodać do stasha nieśledzone pliki (nie dodane do staging area), użyj komendy #git stash -u (dla untracked, gdybyś chciał wszystkie to użyj -a dla all). By stworzyć nowego brancha ze stasha użyj komendy #git stash branch nazwa_brancha. By usunąć stash bez aplikowania zmian użyj komendy #git stash drop. Po drop możesz dodać konkretne ID ze stacka, które chcesz usunąć. 
+
+Reflog to narzędzie do zapisu wszelkich zmian w lokalnym repozytorium, pomaga w przywracaniu jakiegokolwiek stanu repozytorium, czy to usuniętego z historii, czy istniejącego. By wejść do historii zmian w repo używasz komendy #git reflog. Możesz też użyć #git log z flagą -g by wejść do logu z odniesieniami do reflogu. Reflog przechowuje historię przez 90 dni. By zobaczyc historię sprzed określonego okresu czasu użyj komendy #git reflog --since="1.hour" (<- na przykład, pokazuje historię sprzed minionej godziny). Obok 6 znaków commita jest pointer "HEAD@{numer}". By przywrócić stan repo do konkretnego momentu użyj tego wskaźnika przy resecie, na przykład: #git reset --hard HEAD@{2}.
+
+Cherry-pick to narzędzie do przenoszenia commitów między branchami. Jest to coś podobnego do merge. Zaleca się stosowanie merge zamiast cherry-pick. Cherry-pick tworzy nowego commita z innym hashem i bez referencji do źródłowego commita. Oba commity będą miały tą samą zawartość ale będą dwoma różnymi commitami. Przydatne zasady:
+1. Prefer merge or rebase when possible
+2. Avoid creating any duplication
+3. Use 'x' option during cherry-pick -> git cherry-pick -x
